@@ -1,5 +1,5 @@
 # 💫 About Me:
-As a driven and ambitious second-year engineering student at Shree LR Tiwari College of Engineering, I am constantly seeking opportunities to expand my knowledge and skills. 🎓 I have completed an AIML course at Pregrad and gained valuable experience as a data analyst intern at Treadalytrix.<br><br>I am now eager to explore the tech industry further and am actively searching for a part-time role that will allow me to learn and grow. My passion for technology, coupled with my analytical mindset and strong problem-solving abilities, makes me an ideal candidate for positions that require a blend of technical and interpersonal skills.<br><br>Whether it's assisting with data analysis, contributing to software development, or engaging in customer-facing tasks, I am confident in my ability to make a meaningful impact. I am a quick learner, adaptable, and always strive to exceed expectations.<br><br>I would welcome the opportunity to discuss how I can contribute to your team and help drive your organization's success. Let's connect and explore the possibilities! 💼
+As a driven and ambitious second-year engineering student at Shree LR Tiwari College of Engineering, I am constantly seeking opportunities to expand my knowledge and skills. 🎓 I have completed an AIML course at Pregrad and gained valuable experience as a data analyst intern at Treadalytrix.<br>I am now eager to explore the tech industry further and am actively searching for a part-time role that will allow me to learn and grow. My passion for technology, coupled with my analytical mindset and strong problem-solving abilities, makes me an ideal candidate for positions that require a blend of technical and interpersonal skills.<br>Whether it's assisting with data analysis, contributing to software development, or engaging in customer-facing tasks, I am confident in my ability to make a meaningful impact. I am a quick learner, adaptable, and always strive to exceed expectations.<br>I would welcome the opportunity to discuss how I can contribute to your team and help drive your organization's success. Let's connect and explore the possibilities! 💼
 
 
 # 💻 Tech Stack:
@@ -10,8 +10,7 @@ As a driven and ambitious second-year engineering student at Shree LR Tiwari Col
 ![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical)
 
   ## 💰 You can help me by Donating
-  [![BuyMeACoffee]
-  <br>br>(https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)]
+  [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)]
   <br><br>(https://buymeacoffee.com/Buy me a chocolate coffee) 
 
   
