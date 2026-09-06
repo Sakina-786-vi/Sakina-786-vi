@@ -51,8 +51,7 @@ class SakinaRightNow:
 <td width="50%">
 
 **⚡ Fun Facts**
-- 🎓 2nd year engineering student at full speed
-- 💼 Ex data analyst intern @ Treadalytrix
+- 🎓 3rd year engineering student at full speed
 - 🏅 AIML certified from Pregrad
 - 🤝 Always down to collaborate on interesting builds
 - 🍫 Chocolate coffee is non-negotiable
