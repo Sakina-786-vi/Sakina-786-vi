@@ -176,7 +176,6 @@ class Sakina:
     alt="Sakina Rizvi GitHub Contribution Graph"
   />
 </p>
----
 
 ## ✍️ Today's Dev Wisdom
 
