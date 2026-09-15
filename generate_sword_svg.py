@@ -11,12 +11,19 @@ Usage:
 Outputs:
     dist/sword-contributions.svg        (dark background)
     dist/sword-contributions-light.svg  (light background)
+
+NOTE ON THE TOKEN:
+    GH_TOKEN must be a Personal Access Token with the "read:user" scope.
+    The automatic Actions `secrets.GITHUB_TOKEN` will NOT work here — GitHub's
+    GraphQL API rejects it for the `contributionsCollection` field with a
+    "Resource not accessible by integration" error. See sword.yml for setup.
 """
 
 import os
 import sys
 import json
 import urllib.request
+import urllib.error
 
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 
@@ -52,13 +59,37 @@ def fetch_contributions(username: str, token: str):
         },
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        payload = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="replace")
+        raise RuntimeError(
+            f"GitHub API returned HTTP {e.code}. This usually means GH_TOKEN "
+            f"is missing the 'read:user' scope (the default Actions token "
+            f"does not have it — see sword.yml for how to set up a proper "
+            f"Personal Access Token). Raw response: {detail}"
+        ) from e
 
     if "errors" in payload:
-        raise RuntimeError(f"GitHub API error: {payload['errors']}")
+        raise RuntimeError(
+            "GitHub GraphQL API returned errors — this almost always means "
+            "GH_TOKEN lacks the 'read:user' scope. Create a classic PAT "
+            "with that scope and store it as the SWORD_PAT secret. "
+            f"Errors: {payload['errors']}"
+        )
 
-    weeks = payload["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+    user = payload.get("data", {}).get("user")
+    if not user:
+        raise RuntimeError(
+            f"No user data returned for login '{username}'. Double check "
+            f"GH_USERNAME is correct and the account isn't private/suspended."
+        )
+
+    weeks = user["contributionsCollection"]["contributionCalendar"]["weeks"]
+    if not weeks:
+        raise RuntimeError("GitHub returned zero weeks of contribution data.")
+
     return weeks
 
 
@@ -96,20 +127,20 @@ def build_svg(weeks, bg_color: str, empty_color: str, text_color: str) -> str:
     svg_parts.append(
         f'<text x="{left_pad}" y="20" font-family="Fira Code, monospace" '
         f'font-size="13" font-weight="600" fill="{text_color}">'
-        f"⚔️ sliced open by real commits</text>"
+        f"⚔️ real commits, cut open</text>"
     )
 
     defs = [
         "<defs>",
         '<linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="0%">',
-        '<stop offset="0%" stop-color="#f5f5f5"/>',
+        '<stop offset="0%" stop-color="#f0e9ff"/>',
         '<stop offset="45%" stop-color="#ffffff"/>',
-        '<stop offset="55%" stop-color="#c9ced6"/>',
-        '<stop offset="100%" stop-color="#7c828c"/>',
+        '<stop offset="55%" stop-color="#cbb8f2"/>',
+        '<stop offset="100%" stop-color="#7c6a94"/>',
         "</linearGradient>",
         '<linearGradient id="hiltGrad" x1="0%" y1="0%" x2="0%" y2="100%">',
-        '<stop offset="0%" stop-color="#FFC107"/>',
-        '<stop offset="100%" stop-color="#FF6B6B"/>',
+        '<stop offset="0%" stop-color="#C77DFF"/>',
+        '<stop offset="100%" stop-color="#7B2FF7"/>',
         "</linearGradient>",
         "</defs>",
     ]
@@ -132,12 +163,16 @@ def build_svg(weeks, bg_color: str, empty_color: str, text_color: str) -> str:
                 f'fill="{empty_color}"/>'
             )
             # real-color cell, revealed on the sweep, faded out at cycle end, loops
+            t_reveal_end = round(reveal_dur / cycle, 4)
+            t_hold_end = round((sweep_span + hold) / cycle, 4)
+            # keep the fade-out keyframe strictly before 1.0 so the loop
+            # restarts cleanly instead of holding two identical keyframes at 1
+            t_fade_end = min(round((sweep_span + hold + fade_out) / cycle, 4), 0.9999)
             svg_parts.append(
                 f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" fill="{color}" opacity="0">'
                 f'<animate attributeName="opacity" '
                 f'values="0;1;1;0;0" '
-                f'keyTimes="0;{round(reveal_dur / cycle, 4)};{round((sweep_span + hold) / cycle, 4)};'
-                f'{round((sweep_span + hold + fade_out) / cycle, 4)};1" '
+                f'keyTimes="0;{t_reveal_end};{t_hold_end};{t_fade_end};1" '
                 f'dur="{round(cycle, 2)}s" begin="{begin}s" repeatCount="indefinite"/>'
                 f"</rect>"
             )
@@ -149,7 +184,7 @@ def build_svg(weeks, bg_color: str, empty_color: str, text_color: str) -> str:
     x_start = left_pad - 24
     x_end = left_pad + grid_w + 24
     t1 = round(sweep_span / cycle, 4)
-    t2 = round((sweep_span + hold) / cycle, 4)
+    t2 = min(round((sweep_span + hold) / cycle, 4), 0.9999)
 
     svg_parts.append(f'<g>')
     svg_parts.append(
@@ -158,16 +193,16 @@ def build_svg(weeks, bg_color: str, empty_color: str, text_color: str) -> str:
         f'keyTimes="0;{t1};{t2};1" dur="{round(cycle,2)}s" repeatCount="indefinite"/>'
     )
     svg_parts.append(
-        '<circle cx="0" cy="0" r="10" fill="#FFC107" opacity="0.35">'
+        '<circle cx="0" cy="0" r="10" fill="#9D4EDD" opacity="0.4">'
         '<animate attributeName="r" values="7;13;7" dur="0.6s" repeatCount="indefinite"/>'
         "</circle>"
     )
     svg_parts.append(
-        '<polygon points="0,0 34,-5 38,0 34,5" fill="url(#bladeGrad)" stroke="#4b4f57" stroke-width="1"/>'
+        '<polygon points="0,0 34,-5 38,0 34,5" fill="url(#bladeGrad)" stroke="#4b3f5c" stroke-width="1"/>'
     )
     svg_parts.append('<rect x="-4" y="-6" width="4" height="12" fill="url(#hiltGrad)"/>')
-    svg_parts.append('<rect x="-13" y="-4" width="9" height="8" rx="2" fill="#3b2f2f"/>')
-    svg_parts.append('<circle cx="-16" cy="0" r="3.2" fill="#FFC107"/>')
+    svg_parts.append('<rect x="-13" y="-4" width="9" height="8" rx="2" fill="#2b1f3d"/>')
+    svg_parts.append('<circle cx="-16" cy="0" r="3.2" fill="#C77DFF"/>')
     svg_parts.append("</g>")
 
     svg_parts.append("</svg>")
@@ -189,12 +224,16 @@ def main():
         print("Set GH_USERNAME and GH_TOKEN environment variables.", file=sys.stderr)
         sys.exit(1)
 
-    weeks = fetch_contributions(username, token)
+    try:
+        weeks = fetch_contributions(username, token)
+    except RuntimeError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        sys.exit(1)
 
     os.makedirs("dist", exist_ok=True)
 
-    dark_svg = build_svg(weeks, bg_color="#0D1117", empty_color="#161b22", text_color="#f0f6fc")
-    light_svg = build_svg(weeks, bg_color="#ffffff", empty_color="#ebedf0", text_color="#24292f")
+    dark_svg = build_svg(weeks, bg_color="#150029", empty_color="#241539", text_color="#f3ecff")
+    light_svg = build_svg(weeks, bg_color="#ffffff", empty_color="#ece3fb", text_color="#2b1f3d")
 
     with open("dist/sword-contributions.svg", "w", encoding="utf-8") as f:
         f.write(dark_svg)
