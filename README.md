@@ -83,35 +83,6 @@ class Sakina:
 
 ---
 
-## 💼 Experience
-
-| Role | Company | When |
-|---|---|---|
-| Tech Intern | Neeyat AI | Mar 2026 – Aug 2026 |
-| Gen AI Intern | Cyart | Jul 2025 – Jan 2026 |
-| Data Analyst Intern | Treadalytrix | Jun 2025 – Jul 2025 |
-
-- Diagnosed and resolved critical bottlenecks across AI tooling and workflows at Neeyat AI
-- Co-engineered core components of Text-to-Speech (TTS) pipelines at Cyart, from development to deployment
-- Translated raw business data into strategic insights through data modeling and statistical analysis at Treadalytrix
-
----
-
-## 🗝️ Key Projects
-
-**🔍 VisionVault — Offline-First Personal RAG Knowledge System**
-Modular local RAG pipeline: PDF ingestion (PyMuPDF), custom chunking, local embeddings (BAAI/bge-small-en-v1.5), and semantic search via ChromaDB — each component independently tested. Architected for full offline operation with a planned Ollama local-LLM layer and FastAPI/React app.
-
-**⛏️ MineSentinel AI — Real-Time Mine Subsidence Early-Warning System (Hardware + Software)**
-AI-enabled, low-cost early-warning system for underground coal mines. Built ESP32 multi-sensor nodes (MPU6050 tilt/vibration, BMP280, ultrasonic) with NRF24L01 mesh comms and buzzer/LED alerts. Two-stage risk pipeline — Isolation Forest for anomaly detection + XGBoost for subsidence-risk prediction — served via FastAPI/Flask + SQLite, visualized on a React/TypeScript/Tailwind/Leaflet.js GIS dashboard.
-
-**🎙️ Improved Text-to-Speech (TTS) System**
-Cloned and extended the VALL-E-X model, adding multi-voice detection, synthesis-error identification, and a voice/text accuracy-scoring module.
-
-**🧍 Person Detection (FDFR) & Loan Eligibility / Housing EDA**
-Fine-tuned an RT-DETR model for real-time person detection; separately built a loan-approval classifier and ran EDA on housing data to surface key price drivers.
-
----
 
 ## 💻 Tech Stack
 
@@ -180,15 +151,6 @@ Fine-tuned an RT-DETR model for real-time person detection; separately built a l
 
 ---
 
-## 📈 Contribution Graph
-
-<div align="center">
-
-[![Sakina's Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Sakina-786-vi&bg_color=150029&color=9D4EDD&line=7B2FF7&point=C77DFF&area=true&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
-
-</div>
-
----
 
 ## ✍️ Today's Dev Wisdom
 
