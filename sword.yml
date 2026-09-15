@@ -20,10 +20,23 @@ jobs:
         with:
           python-version: "3.11"
 
+      # IMPORTANT: this step needs a Personal Access Token, NOT the default
+      # secrets.GITHUB_TOKEN. The automatic Actions token cannot query the
+      # `contributionsCollection` GraphQL field — GitHub returns a
+      # "Resource not accessible by integration" error for it, which is why
+      # the sword animation was never actually generating.
+      #
+      # One-time setup:
+      #   1. Go to https://github.com/settings/tokens (classic tokens)
+      #   2. Generate a new token with ONLY the "read:user" scope
+      #      (add "repo" too if you want private contributions counted)
+      #   3. Copy it, then in THIS repo go to
+      #      Settings → Secrets and variables → Actions → New repository secret
+      #   4. Name it SWORD_PAT and paste the token as the value
       - name: Generate sword SVG from real contributions
         env:
           GH_USERNAME: ${{ github.repository_owner }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.SWORD_PAT }}
         run: python scripts/generate_sword_svg.py
 
       - name: Commit updated SVG
