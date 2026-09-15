@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Animated header banner -->
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:150029,50:7B2FF7,100:C77DFF&height=210&section=header&text=Hey%2C%20I'm%20Sakina!%20%E2%9A%94%EF%B8%8F&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI%2FML%20Engineer%20in%20Training%20%7C%20GenAI%20%C2%B7%20NLP%20%C2%B7%20CV%20%C2%B7%20IoT&descAlignY=58&descSize=18"/>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:150029,50:7B2FF7,100:C77DFF&height=210&section=header&text=Hey%2C%20I'm%20Sakina!%20%E2%9A%94%EF%B8%8F&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI%2FML%20Engineer%20in%20Training%20%7C%20GenAI%20%20%C2%B7%20CV%20%C2%B7%20IoT&descAlignY=58&descSize=18"/>
 
 </div>
 
@@ -14,7 +14,7 @@
 
 ## 👋 About Me
 
-AI/ML Engineer in training, building **Generative AI, NLP, and Computer Vision** systems end-to-end — from retrieval-augmented generation pipelines to fine-tuned voice and detection models. Comfortable across the full ML lifecycle: data processing, training/fine-tuning, evaluation, and deployment-oriented backend integration. Also work across the stack into **embedded IoT**, taking sensor-driven prototypes from circuit to cloud.
+AI/ML Engineer in training, building **Generative AI, and Computer Vision** systems end-to-end — from retrieval-augmented generation pipelines to fine-tuned voice and detection models. Comfortable across the full ML lifecycle: data processing, training/fine-tuning, evaluation, and deployment-oriented backend integration. Also work across the stack into **embedded IoT**, taking sensor-driven prototypes from circuit to cloud.
 
 ```python
 class Sakina:
